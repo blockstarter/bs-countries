@@ -7,7 +7,9 @@ let toArray = (json, lang) => {
     let codes = Object.keys(json);
     let objects = codes.map(code => { return { code, name: json[code] }});
     let arr = sortBy(objects, ['name']).map(o => [o.code, o.name]);
-    fs.writeFileSync(`./array-${lang}.json`, JSON.stringify(arr), 'utf-8');
+    fs.writeFileSync(`./array-${lang}.min.json`, JSON.stringify(arr), 'utf-8');
+    fs.writeFileSync(`./array-${lang}.min.js`,
+        `var window.BsCountries = {"${lang}": ${JSON.stringify(arr)}};`, 'utf-8');
 };
 
 toArray(countriesEn, 'en');
